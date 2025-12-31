@@ -1,9 +1,13 @@
-[phases.build]
-dependsOn = ['install']
-cmds = ['pnpm --filter @earthworm/schema build', 'pnpm --filter web build']
-
 [phases.setup]
 nixPkgs = ['nodejs', 'pnpm']
 
+[phases.install]
+cmds = ['pnpm install']
+
+[phases.build]
+# 这里强制先编译依赖包，再编译前端，彻底跳过 API 目录
+cmds = ['pnpm --filter @earthworm/schema build', 'pnpm --filter web build']
+
 [start]
+# 这里的端口必须使用 Zeabur 提供的变量
 cmd = 'pnpm --filter web preview -- --host 0.0.0.0 --port ${PORT}'

@@ -1,0 +1,9 @@
+[phases.build]
+dependsOn = ['install']
+cmds = ['pnpm --filter @earthworm/schema build', 'pnpm --filter web build']
+
+[phases.setup]
+nixPkgs = ['nodejs', 'pnpm']
+
+[start]
+cmd = 'pnpm --filter web preview -- --host 0.0.0.0 --port ${PORT}'
